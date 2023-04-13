@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hexo使用</title>
+    <url>/2023/04/13/zsh/hexo/</url>
+    <content><![CDATA[<h1 id="一、全流程"><a href="#一、全流程" class="headerlink" title="一、全流程"></a>一、全流程</h1><h2 id="1-hexo-的安装"><a href="#1-hexo-的安装" class="headerlink" title="1. hexo 的安装"></a>1. hexo 的安装</h2><p>1、首先全局安装一下 hexo，使用命令【类似于 Vue 脚手架】</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p>2、创建项目【自动生成一个文件夹，如果省略项目名称的话就会默认在使用命令的根目录下进行创建项目】</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [folderName]</span><br></pre></td></tr></table></figure>
+
+<p>3、进入项目目录下，使用命令安装相应的依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
+
+<p>4、生成静态文件【在项目目录中生成 public 文件】</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p>5、启动服务器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-部署前的准备"><a href="#2-部署前的准备" class="headerlink" title="2. 部署前的准备"></a>2. 部署前的准备</h2><p>上述是创建一个应用的最简步骤，接下来的操作是将代码托管到 github，并创建一个 github 域名供查看。</p>
+<ol>
+<li>下载 hexo-deployer-git 包【需要注意的是，这个包是在项目中安装的，不要全局安装】</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>创建远程仓库【命名是唯一的：用户名.github.io】：</p>
+<p><img src="https://s2.loli.net/2021/12/30/yax8DK3Ifv9R5nw.png" alt="image-20211229214808378.png"></p>
+</li>
+<li><p>更改项目配置，将项目与远程仓库进行绑定，找到项目根目录下的【_config.yml 】文件，并在末尾进行修改相关配置如下：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: git@github.com:NNU-GIS-427/NNU-GIS-427.github.io.git</span><br><span class="line">branch: main</span><br></pre></td></tr></table></figure>
+
+<p>上述配置中的 repo 对象修改为 github 远程仓库的地址，分支 branch 修改为 main，github 默认的分支为 main，也可以修改为其他分支【如果修改为其他分支的话，记得在以下界面切换着查看一下】</p>
+<p><img src="https://s2.loli.net/2021/12/30/DiKWs1FXAjZ7IRf.png" alt="image-20211229214925972.png"></p>
+<h2 id="3-部署"><a href="#3-部署" class="headerlink" title="3. 部署"></a>3. 部署</h2><p>在先前<strong>安装好 hexo-deployer-git</strong>、<strong>创建好仓库</strong>、<strong>配置好_config.yaml 文件</strong>的基础上，使用<code>hexo deploy</code>命令即可进行部署，命令的简写方式为：<code>hexo d</code></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><strong>初次使用</strong>：</p>
+<ol>
+<li><code>hexo g</code>生成静态页面===&gt;生成<strong>public 文件夹</strong>【HTML 等文件】</li>
+<li>使用<code>hexo s</code>进行本地<strong>预览查看</strong></li>
+<li>再使用<code>hexo d</code>进行部署到 github===&gt;生成<strong>deploy_git 文件夹</strong></li>
+</ol>
+<p>​ 上述命令 1 会在项目目录中生成 public 目录【文件夹内的是编译好的 html 文件】，在开发时如果进行了改动，应该使用<code>hexo clean</code>进行清除【最暴力的方法是先删除 public 目录，再使用<code>hexo clean</code>命令来清空，如果前面没有达到这个预期效果的话，可以尝试这种方法】，然后再使用命令 1 来生成静态页面，再使用命令 3 部署到 github。</p>
+<p><strong>日常使用：</strong></p>
+<ol>
+<li>删除 deploy_git 文件夹</li>
+<li><code>hexo clean</code>===&gt;<strong>删除 public 目录</strong></li>
+<li><code>hexo g</code>===&gt;<strong>重新生成 public 文件夹</strong></li>
+<li><code>hexo s</code>===&gt;<strong>预览</strong>【非必要步骤】</li>
+<li><code>hexo d</code>===&gt;<strong>生成 deploy_git 文件夹</strong></li>
+</ol>
+<p>如果不进行 1、2 两步骤，一定会报错，<strong>需谨记！！！</strong></p>
+<h1 id="二、基本操作"><a href="#二、基本操作" class="headerlink" title="二、基本操作"></a>二、基本操作</h1><h2 id="1-如何在-Markdown-中插入图片？"><a href="#1-如何在-Markdown-中插入图片？" class="headerlink" title="1. 如何在 Markdown 中插入图片？"></a>1. 如何在 Markdown 中插入图片？</h2><p>​ 一般在 Markdown 语法中，假如直接插入本地图片，由于本地文件变更比较频繁，容易造成图片遗失，这里我们选择图床来保存图片。</p>
+<p>这里选择将本地图片上传至<code>sm.ms</code>网站上，可以直接生成 Markdown 语法格式的地址，将地址直接复制到相应位置即可。</p>
+<h2 id="2-new"><a href="#2-new" class="headerlink" title="2. new"></a>2. new</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new [layout] &lt;titleName&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中的 layout 如果不指定的话就是在_config.yml 全局配置项的 default_layout 属性值，默认值为<code>default_layout: post</code></li>
+<li>如果标题包含空格的话，要使用引号括起来。<code>hexo new &quot;your title name&quot;</code></li>
+<li>新建文章时一定要加上标题名，否则将达不到想要的效果（–path 只是一个强制参数，放在前或后都无所谓）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &lt;layout&gt; &lt;titleName&gt; --path yourPath</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &lt;layout&gt; --path yourPath &lt;titleName&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用默认的 post 布局且要指定路径，也是按照以上命令来进行指定</p>
+<ul>
+<li>值得注意的是，使用<code>--path</code>记得加上路径以及文件.md 文件的名称，如下代码就会在<code>source\_posts\zsh</code>路径下生成 hexo.md 文件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;hexo使用说明&quot; --path zsh/hexo.md</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-page-和-post-amp-amp-draft-的区别"><a href="#3-page-和-post-amp-amp-draft-的区别" class="headerlink" title="3. page 和 post&amp;&amp;draft 的区别"></a>3. page 和 post&amp;&amp;draft 的区别</h2><p>只有 page 布局才能任意放置在根路径下，<strong>自定义布局</strong>和<strong>post 布局</strong>只能放置在<strong>_posts 文件夹</strong>中。</p>
+<p><img src="https://raw.githubusercontent.com/crazyzsh/myImage/main/imageTest/202112311509234.png" alt="image-20211231150950197"></p>
+<h1 id="三、功能完善"><a href="#三、功能完善" class="headerlink" title="三、功能完善"></a>三、功能完善</h1><h2 id="1-评论"><a href="#1-评论" class="headerlink" title="1. 评论"></a>1. 评论</h2><h2 id="2-图床使用"><a href="#2-图床使用" class="headerlink" title="2. 图床使用"></a>2. 图床使用</h2><p><strong>2.1 github、picgo 进行绑定</strong></p>
+<p>使用 sm.ms 图床容易挂掉（有时候晚上看不到），这里使用 github/gitee 自带的图床，使用工具为：picgo</p>
+<p>这里以 github 为例 ：</p>
+<ul>
+<li><p>首先在 github 上新建一个仓库用来专门保存图片，同时拿到 github 的 token</p>
+</li>
+<li><p>下载 picgo 软件【一款图床集大成软件，里面内嵌了国内外众多优秀图床】</p>
+</li>
+<li><p>在 picgo 中进行 github 相关配置如下图：</p>
+<ul>
+<li><p><img src="https://raw.githubusercontent.com/crazyzsh/myImage/main/imageTest/picgo%E4%B8%ADgithub%E8%AE%BE%E7%BD%AE.png"></p>
+</li>
+<li><p>默认的域名为：</p>
+<p><code>https://githubusercontent.com/用户名/仓库名/分支名/目录名称/图片文件名</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.2 picgo 和 typora 进行绑定</strong></p>
+<p><img src="https://raw.githubusercontent.com/crazyzsh/myImage/main/imageTest/typora%E4%B8%8Epicgo%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A.png" alt="image-20211231111504773"></p>
+<p><strong>具体用法</strong>：</p>
+<p>通过上述的 typora 与 picgo 进行的绑定，只要在 typora 中进行图片插入操作【赋值粘贴（cv，snipaste），拖拽】就可以直接进行上传操作，此时如果在 picgo 中<strong>关闭了</strong>【上传前重命名】且<strong>打开了</strong>【时间戳重命名】的话就不会弹出窗口来提示而是<strong>直接上传</strong>了。</p>
+]]></content>
+      <categories>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>zsh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>zsh单向耦合实验记录</title>
+    <url>/2023/04/13/zsh/%E5%8D%95%E5%90%91%E8%80%A6%E5%90%88%E5%AE%9E%E9%AA%8C%E6%A0%B8%E5%BF%83%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h1 id="测试（后边再写）"><a href="#测试（后边再写）" class="headerlink" title="测试（后边再写）"></a>测试（后边再写）</h1>]]></content>
+      <categories>
+        <category>模型</category>
+      </categories>
+      <tags>
+        <tag>zsh</tag>
+      </tags>
+  </entry>
+</search>
